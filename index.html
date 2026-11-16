@@ -1,0 +1,633 @@
+<!doctype html>
+<html lang="en">
+   <head>
+      <meta charset="UTF-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <!-- STUDIO-HEAD:START -->
+<title>STUDIO: ISIDORELU.COM</title>
+      <meta name="description" content="ISIDORELU.COM is a New York creative studio, production company, and blog founded by Isid Or. Music, sound, video, photography, live events, and merchandise for clients." />
+      <!-- STUDIO-HEAD:END -->
+      <meta name="author" content="Isid Or (Isidore Lu)" />
+      <meta name="robots" content="index, follow" />
+      <link rel="preload" as="image" href="FOUNDER_PHOTO.jpg" />
+      <link rel="icon" href="https://isidorelu.com/prof-pic.jpg" type="image/jpeg" />
+
+      <meta property="og:title" content="STUDIO: ISIDORELU.COM" />
+      <meta property="og:description" content="Music, sound, video, live events, and merch. New York." />
+      <meta property="og:image" content="FOUNDER_PHOTO.jpg" />
+      <meta property="og:url" content="https://studio.isidorelu.com" />
+      <meta property="og:type" content="website" />
+      <meta name="twitter:card" content="summary_large_image" />
+
+      <script type="application/ld+json">
+         {
+            "@context": "https://schema.org",
+            "@type": "Organization",
+            "name": "ISIDORELU.COM",
+            "url": "https://studio.isidorelu.com",
+            "location": "New York, NY",
+            "founder": { "@type": "Person", "name": "Isid Or", "alternateName": "Isidore Lu", "url": "https://isidorelu.com" },
+            "sameAs": ["https://blog.isidorelu.com", "https://instagram.com/isidcore", "https://instagram.com/isid.or", "https://x.com/isid__or", "https://tiktok.com/@isid__or", "https://www.youtube.com/@isid__or", "https://www.linkedin.com/in/isidorelu", "https://www.youtube.com/@isidcore"]
+         }
+      </script>
+
+      <style>
+         * { box-sizing: border-box; }
+         html { -webkit-text-size-adjust: 100%; }
+         body { margin: 0; background: #000; color: #000; font-family: "Helvetica Neue", Arial, sans-serif; font-size: 16px; line-height: 1.4; }
+         p { margin: 0 0 1em; }
+         h1, h2, h3 { margin: 0; }
+         .part { display: contents; }
+
+         /* ---------- background reel ---------- */
+         .reel { position: fixed; inset: 0; z-index: 0; background: #000 center / cover no-repeat; overflow: hidden; }
+         .reel-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; opacity: 0; transition: opacity 0.3s ease-out; }
+         .reel-video.is-playing { opacity: 1; }
+         .reel-caption {
+            z-index: 0; position: fixed; right: 16px; bottom: 12px; margin: 0;
+            color: #fff; font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; text-shadow: 0 0 6px rgba(0, 0, 0, 0.6);
+         }
+         .reel-caption a { color: #fff; }
+
+         /* ---------- marquee ---------- */
+         marquee {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 10;
+            background: #fff; border-bottom: 1px solid #000; padding: 5px 0; font-size: 12px; letter-spacing: 0.03em;
+         }
+
+         /* ---------- cards ---------- */
+         main { position: relative; z-index: 1; padding: 28px 0 24vh; }
+         .card {
+            background: #fff; width: min(680px, calc(100vw - 24px)); margin: 0 auto 30vh; padding: 22px 30px 26px;
+            scroll-margin-top: 40px; text-align: center;
+            /* on every load: the reel shows alone for 1.6s, then all cards fade in together */
+            opacity: 0; animation: appear var(--fade-dur, 0.25s) ease-out var(--fade-delay, 1.6s) forwards;
+         }
+         @keyframes appear { to { opacity: 1; } }
+         .card.wide { width: min(820px, calc(100vw - 24px)); }
+         .card > p, .card > .list { max-width: 580px; margin-left: auto; margin-right: auto; }
+         .runhead {
+            display: flex; justify-content: center; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase;
+            border-bottom: 1px solid #000; padding-bottom: 5px; margin-bottom: 18px;
+         }
+         .runhead span + span::before { content: "\00a0\00a0·\00a0\00a0"; }
+         h2 { font-size: 17px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.02em; margin-bottom: 1em; }
+         h3 { font-size: 17px; font-weight: 700; }
+         .small { font-size: 14px; }
+         .large { font-size: 18px; }
+         ul.list { list-style: none; padding: 0; margin-top: 0; margin-bottom: 1em; }
+
+         /* ---------- opening card ---------- */
+         .opening { min-height: calc(100vh - 28px); display: flex; align-items: center; justify-content: center; padding: 0 12px 4vh; }
+         .masthead { margin: 0 auto; width: fit-content; max-width: calc(100vw - 24px); }
+         .masthead h1 { font-size: clamp(32px, 9.4vw, 92px); line-height: 0.95; letter-spacing: -0.02em; font-weight: 700; margin: 4px 0 14px; }
+         .masthead h1 a { color: #000; text-decoration: none; }
+         .masthead h1 a:hover { text-decoration: underline; text-decoration-thickness: 2px; }
+         .masthead .subs { font-size: 14px; font-weight: 700; letter-spacing: 0.06em; margin: 0 auto 18px; line-height: 1.5; }
+         nav { border-top: 1px solid #000; padding-top: 8px; font-size: 14px; letter-spacing: 0.05em; text-transform: uppercase; }
+         nav a { margin: 0 8px; }
+
+         /* ---------- figures ---------- */
+         .figures { display: grid; grid-template-columns: repeat(3, 1fr); border-top: 1px solid #000; border-bottom: 1px solid #000; padding: 12px 0 4px; margin: 4px 0 1em; }
+         .figures div { padding: 0 8px 10px; font-size: 14px; line-height: 1.3; }
+         .figures b { display: block; font-size: 22px; line-height: 1.1; margin-bottom: 2px; }
+         .figures:last-child { margin-bottom: 0; }
+         .tag { font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; margin: 0 0 6px; }
+         .space { height: 1.4em; }
+
+         /* ---------- table ---------- */
+         table.index { width: 100%; border-collapse: collapse; font-size: 14px; margin-bottom: 1em; }
+         table.index th { font-weight: 400; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; padding: 0 4px 4px; }
+         table.index td { border-top: 1px solid #000; padding: 4px; vertical-align: top; }
+         table.index tr:last-child td { border-bottom: 1px solid #000; }
+         table.index:last-child { margin-bottom: 0; }
+
+         /* ---------- project title + meta ---------- */
+         .proj-head { margin: 16px 0 12px; }
+         .proj-head:first-child { margin-top: 0; }
+         .proj-head .num { display: block; font-size: 14px; margin-bottom: 2px; }
+         .proj-head .meta { font-size: 12px; letter-spacing: 0.05em; text-transform: uppercase; margin: 3px 0 0; }
+
+         /* ---------- specs: fit-to-content block, centered; labels right, values left ---------- */
+         dl.specs { display: grid; grid-template-columns: max-content minmax(0, 380px); justify-content: center; gap: 1px 16px; font-size: 14px; margin: 0 0 1em; border-top: 1px solid #000; padding-top: 6px; }
+         dl.specs dt { font-weight: 700; text-transform: uppercase; font-size: 11px; letter-spacing: 0.06em; padding-top: 2px; text-align: right; }
+         dl.specs dd { margin: 0; text-align: left; }
+
+         /* ---------- credits: labels and values meet at the center of the card ---------- */
+         details { font-size: 14px; margin-top: 4px; }
+         summary { cursor: pointer; color: #0000ee; text-decoration: underline; list-style-position: inside; }
+         dl.credits { display: grid; grid-template-columns: 1fr 1fr; gap: 1px 16px; margin: 10px 0 0; }
+         dl.credits dt { font-weight: 700; text-align: right; }
+         dl.credits dd { margin: 0; text-align: left; }
+         dl.credits .gap { grid-column: 1 / -1; height: 0.7em; }
+
+         /* ---------- media: images and videos (placeholder label shows until a file loads over it) ---------- */
+         .media { display: grid; grid-template-columns: 1fr; gap: 12px; margin: 0 0 4px; }
+         .media.n2 { grid-template-columns: 1fr 1fr; }
+         .media.n3 { grid-template-columns: repeat(3, 1fr); }
+         .media > a { display: block; }
+         .media + h2, .media + .proj-head { margin-top: 16px; }
+         .ph { position: relative; background: #e9e9e9; overflow: hidden; }
+         .ph .label {
+            position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; text-align: center;
+            font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: #555; padding: 12px;
+         }
+         .ph video, .ph img { position: relative; display: block; width: 100%; height: 100%; object-fit: cover; }
+         .shape-wide { aspect-ratio: 16 / 9; }
+         .shape-square { aspect-ratio: 1 / 1; }
+         .shape-tall { aspect-ratio: 3 / 4; }
+         .shape-portrait { aspect-ratio: 3 / 4; width: 160px; justify-self: center; }
+         .media.n1 .shape-natural { aspect-ratio: 16 / 9; }
+         img.natural { width: 100%; display: block; }
+
+         /* ---------- tiles (small square images with captions) ---------- */
+         .tiles { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; margin: 4px 0 1em; }
+         .tiles > * { font-size: 11px; line-height: 1.25; }
+         .tiles .ph { aspect-ratio: 1 / 1; margin-bottom: 4px; }
+
+         /* ---------- services ---------- */
+         .services { display: grid; grid-template-columns: 1fr 1fr; gap: 0 28px; }
+         .services div { border-top: 1px solid #000; padding: 6px 0 10px; }
+         .services h3 { font-size: 14px; text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 2px; }
+         .services p { font-size: 14px; margin: 0; }
+
+         footer.card { padding: 10px 30px; font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 0; }
+
+         @media (max-width: 600px) {
+            .card { padding: 18px 18px 20px; margin-bottom: 22vh; }
+            nav a { margin: 0 5px; }
+            .figures { grid-template-columns: 1fr 1fr; }
+            .media.n2, .media.n3 { grid-template-columns: 1fr; }
+            .media.n2 .shape-natural, .media.n3 .shape-natural { aspect-ratio: 16 / 9; }
+            .tiles { grid-template-columns: repeat(3, 1fr); }
+            .services { grid-template-columns: 1fr; }
+            dl.specs, dl.credits { grid-template-columns: 1fr; gap: 0; }
+            dl.specs dt, dl.credits dt, dl.specs dd, dl.credits dd { text-align: center; }
+            dl.specs dd, dl.credits dd { margin-bottom: 8px; }
+            .opening { min-height: 100vh; min-height: 100svh; margin-top: -28px; padding: 0 12px; }
+            .masthead { margin: 0 auto; }
+         }
+         @media (prefers-reduced-motion: reduce) {
+            .card { animation-duration: 0s; }
+            .reel-video { transition: none; }
+         }
+      </style>
+   </head>
+
+   <body>
+      <!--
+         BACKGROUND REEL — not controlled by the sheet, so it never reloads or restarts when the sheet loads.
+         To change the video, replace EVERYTHING_TEST_2.mp4 in the repo (same name). The background image is the still shown first;
+         change it in both places (here and the preload line in the head). STILL_MS below sets how long it shows.
+      -->
+      <div class="reel" aria-hidden="true" style="background-image: url('FOUNDER_PHOTO.jpg')">
+         <video class="reel-video" muted loop playsinline preload="auto" src="EVERYTHING_REEL.mp4"></video>
+      </div>
+      <script>
+         // Every load: show the still for STILL_MS, then start the video from its first frame and fade it in.
+         // play() is called right away at that point (iPhone Safari won't load the video until it's asked to play);
+         // the video stays hidden until frames are actually showing. If the browser blocks playback, the still stays.
+         (function () {
+            var STILL_MS = 600;
+            var v = document.querySelector(".reel-video");
+            if (!v) return;
+            v.addEventListener("playing", function () { v.classList.add("is-playing"); }, { once: true });
+            setTimeout(function () {
+               var p = v.play();
+               if (p && p.catch) p.catch(function () {});
+            }, Math.max(0, STILL_MS - performance.now()));
+         })();
+      </script>
+
+      <!--
+         STUDIO PAGE. Everything below comes from the Studio Google Sheet.
+         Paste each tab's published CSV link into the matching data- line
+         (File → Share → Publish to web → choose the tab → Comma-separated values → Publish → copy the link).
+
+         The HTML between STUDIO:START and STUDIO:END is a copy of the sheet for search engines, and it also shows
+         if the sheet can't be reached. To refresh it (and the title/description in the head), open the page with
+         ?export at the end of the address and paste the two boxes where they say.
+      -->
+      <div id="studio-page"
+           data-site="https://docs.google.com/spreadsheets/d/e/2PACX-1vTRaJPsu0CTbM2gjHzfrg3COazJKdXv-TQGpuW3nQQh6sD3I1FGsEWJpv9yMKvwUzeTeMZaW57sbMXs/pub?gid=981632224&amp;single=true&amp;output=csv"
+           data-nav="https://docs.google.com/spreadsheets/d/e/2PACX-1vTRaJPsu0CTbM2gjHzfrg3COazJKdXv-TQGpuW3nQQh6sD3I1FGsEWJpv9yMKvwUzeTeMZaW57sbMXs/pub?gid=2077178826&amp;single=true&amp;output=csv"
+           data-cards="https://docs.google.com/spreadsheets/d/e/2PACX-1vTRaJPsu0CTbM2gjHzfrg3COazJKdXv-TQGpuW3nQQh6sD3I1FGsEWJpv9yMKvwUzeTeMZaW57sbMXs/pub?gid=24193997&amp;single=true&amp;output=csv"
+           data-blocks="https://docs.google.com/spreadsheets/d/e/2PACX-1vTRaJPsu0CTbM2gjHzfrg3COazJKdXv-TQGpuW3nQQh6sD3I1FGsEWJpv9yMKvwUzeTeMZaW57sbMXs/pub?gid=1029675403&amp;single=true&amp;output=csv">
+<!-- STUDIO:START -->
+<div class="part" data-part="caption" data-sig="1r6k908">
+<p class="reel-caption">Now showing — isid or, “Everything” (2026)</p>
+</div>
+
+<div class="part" data-part="marquee" data-sig="1cd2ka4">
+<marquee scrollamount="5"><strong>IN 2026, ISIDORELU.COM PRODUCED <u><em>1</em> MUSIC VIDEO</u>, RELEASED <u><em>1</em> MINI-ALBUM</u>, SCORED <u><em>5</em> IMMERSIVE ACTIVATIONS</u> FOR KODANSHA HOUSE LA &amp; NYC, &amp; THREW <u><em>2</em> PARTIES</u> IN NEW YORK.</strong> &nbsp;&nbsp;&nbsp;&nbsp;NOW ACCEPTING COMMISSIONS.</marquee>
+</div>
+
+<div class="part" data-part="main" data-sig="gpe4x0">
+<main>
+<div class="opening"><header class="card masthead"><div class="runhead"><span>CREATIVE STUDIO &amp; PRODUCTION</span></div><h1><a href="https://isidorelu.com">ISIDORELU.COM</a></h1><p class="subs">NEW YORK</p><nav><a href="#work">Work</a>
+<a href="#services">Services</a>
+<a href="#founder">Me</a>
+<a href="https://www.instagram.com/isidcore/">IG</a>
+<a href="#contact">Contact</a></nav></header></div>
+
+<section class="card" id="statement">
+<div class="runhead"><span>Statement</span></div><p><strong>ISIDORELU.COM</strong> is a creative and production studio in New York, founded by the musician and designer <strong><a href="#founder">Isid Or</a></strong>. It develops and produces original _music_, _film_, _photography_, _live events_, _websites_, and _merchandise_, and takes on [audio and creative commissions] for clients.</p>
+<p>The studio grew out of <a href="https://www.instagram.com/isidcore/"><em>@isidcore</em></a>, an Instagram blog and <a href="https://blog.isidorelu.com">Substack</a> by Isid Or covering _pop culture_, _fashion_, and the_arts_. In the summer of 2026, it produced the self-financed campaign for the Japanese mini-album <em>Sincerely, Mr. Love &amp; Pop</em>, including <strong>a</strong> [1] full-production <strong>music video</strong>, <strong>three</strong> [3] <strong>merchandise lines</strong>, and <strong>two</strong> [2] <strong>release parties</strong> in New York. The same summer, the studio took on its first corporate client, scoring <strong>five</strong> [5] <strong>immersive activations</strong> for <strong><a href="https://kodanshahouse.com/">Kodansha House</a></strong> in Los Angeles and New York.</p>
+<p>In November 2026, the [creative studio, production company, and blog] consolidated under ISIDORELU.COM. The studio is open to commissions.</p>
+<div class="space" style="height: 1.4em"></div>
+<p class="tag">[First 5 Months: Jun-Oct 2026]</p>
+<div class="figures"><div><b>5</b>Immersive activations for <em>Kodansha House</em></div><div><b>200+</b>Attendees at a single studio event</div><div><b>20+</b>Cast and crew on a single shoot</div><div><b>3</b>Merchandise lines designed and produced</div><div><b>2</b>Cities: NYC and LA</div><div><b>1</b>Founder, end to end</div></div>
+</section>
+
+<section class="card" id="work">
+<h2>Selected Work</h2>
+<table class="index"><tr><th>No.</th><th>[Project]</th><th>[Format]</th><th>[Client]</th></tr><tr><td>01</td><td><a href="#w01">“EVERYTHING”</a></td><td>MUSIC VIDEO</td><td>Isid Or</td></tr><tr><td>02</td><td><a href="#w02"><em>SINCERELY, MR. LOVE &amp; POP</em></a></td><td>MINI-ALBUM</td><td>Isid Or<br />isid music</td></tr><tr><td>03</td><td><a href="#w03">KODANSHA HOUSE LA &amp; NYC</a></td><td>IMMERSIVE AUDIO</td><td>Kodansha</td></tr><tr><td>04</td><td><a href="#w04">END-OF-SUMMER PARTY @ BEVERLY&#39;S</a></td><td>EVENT [NYC]</td><td>Isid Or<br />Blizzy McGuire<br />Beverly&#39;s</td></tr><tr><td>05</td><td><a href="#w05">J-POP NIGHT @ KODANSHA HOUSE</a></td><td>EVENT [NYC]</td><td>Kodansha House</td></tr><tr><td>06</td><td><a href="#w06">ARTIST MERCHANDISE</a></td><td>APPAREL</td><td>Isid Or</td></tr></table>
+</section>
+
+<section class="card wide" id="w01">
+<div class="runhead"><span>Selected Work — 01</span><span>[MUSIC VIDEO]</span></div><div class="media n3"><div class="ph shape-natural"><span class="label">Vignette — “Everything”</span><video autoplay muted loop playsinline preload="metadata" poster="https://img.youtube.com/vi/FJRkCm_5sII/maxresdefault.jpg" src="EVERYTHING_VIGNETTE_18.mp4"></video></div><div class="ph shape-natural"><span class="label">Vignette — “Everything”</span><video autoplay muted loop playsinline preload="metadata" poster="https://img.youtube.com/vi/FJRkCm_5sII/maxresdefault.jpg" src="EVERYTHING_VIGNETTE_43.mp4"></video></div><div class="ph shape-natural"><span class="label">Vignette — “Everything”</span><video autoplay muted loop playsinline preload="metadata" poster="https://img.youtube.com/vi/FJRkCm_5sII/maxresdefault.jpg" src="EVERYTHING_VIGNETTE_55.mp4"></video></div><div class="ph shape-natural"><span class="label">Vignette — “Everything”</span><video autoplay muted loop playsinline preload="metadata" poster="https://img.youtube.com/vi/FJRkCm_5sII/maxresdefault.jpg" src="EVERYTHING_VIGNETTE_2.mp4"></video></div><div class="ph shape-natural"><span class="label">Vignette — “Everything”</span><video autoplay muted loop playsinline preload="metadata" poster="https://img.youtube.com/vi/FJRkCm_5sII/maxresdefault.jpg" src="EVERYTHING_VIGNETTE_25.mp4"></video></div><div class="ph shape-natural"><span class="label">Vignette — “Everything”</span><video autoplay muted loop playsinline preload="metadata" poster="https://img.youtube.com/vi/FJRkCm_5sII/maxresdefault.jpg" src="EVERYTHING_VIGNETTE_3.mp4"></video></div></div>
+<div class="proj-head"><span class="num">01</span><h3>ISID OR –– &quot;EVERYTHING&quot; (OFFICIAL VIDEO)</h3><p class="meta">Music video • 2026 • New York</p></div>
+<dl class="specs"><dt>Artist</dt><dd>isid or</dd><dt>Production</dt><dd>ISIDORELU.COM (with TABÚ Productions)</dd><dt>Director</dt><dd>Tin Lee</dd><dt>Locations</dt><dd>Lower Manhattan • East Williamsburg, Brooklyn</dd><dt>Studio role</dt><dd>Production company • Executive production • Creative direction • Edit • Color • Sound mix • Original music</dd></dl>
+<p>The lead single from <em><a href="#w02">Sincerely, Mr. Love &amp; Pop</a></em> was filmed as a full narrative production, complete with choreography, on July 6, 2026, with a cast and crew of twenty [20] that included three [3] models, three [3] actors, two [2] dancers, and a styling team of four [4], dressed from four [4] archives.</p>
+<p>The studio financed and produced the video. Isid Or served as executive producer, creative director, and lead talent on set and edited, color-graded, and sound-mixed the final cut. Jun-ting Zhou of TABÚ Productions was DOP.</p>
+<p class="small"><a href="https://www.youtube.com/watch?v=FJRkCm_5sII">Watch the full video on YouTube →</a></p>
+<div class="space" style="height: 0.7em"></div>
+<details><summary>FULL CREDITS</summary><dl class="credits"><dt>EP / Creative Director</dt><dd>Isid Or</dd><dt>Director / Writer</dt><dd>Tin Lee</dd><dt>AD</dt><dd>Ellen Davis</dd><dt>DOP</dt><dd>Jun-ting Zhou</dd><dt>AC</dt><dd>Adriana Cuevas</dd><dt>Production Company</dt><dd>ISIDORELU.COM (with TABÚ Productions)</dd><span class="gap"></span><dt>Models</dt><dd>Klaire Pham, Malcolm XL, Arabella Landry</dd><dt>Actors</dt><dd>Annabel Jones, Gagbert, Lisa Marinelli</dd><dt>Dancers</dt><dd>Yujun Wu, Cindy Liu</dd><dt>Choreographer</dt><dd>Yujun Wu</dd><span class="gap"></span><dt>Stylist</dt><dd>Tommy Do</dd><dt>Stylist Assistants</dt><dd>Vincent Luu, Chuwei Zheng, Edgar Alejandro Barrios</dd><dt>Wardrobe</dt><dd>Future Treasure, Shanice Archive, Roy Luo, Graeme Schneider</dd><dt>Hair</dt><dd>Alexis Shan</dd><dt>Makeup</dt><dd>Hinana Nishitomi</dd><span class="gap"></span><dt>Editor / Colorist / Sound Mixer</dt><dd>Isidore Lu</dd><dt>BTS</dt><dd>Claire Su</dd><dt>Key PA</dt><dd>Ellen Davis</dd><dt>PAs</dt><dd>Klaire Pham, Chuwei Zheng, Claire Su</dd><span class="gap"></span><dt>Song</dt><dd>“Everything” by isid or, from <em>Sincerely, Mr. Love &amp; Pop</em></dd><dt>Performer</dt><dd>isid or</dd><dt>Songwriter</dt><dd>Isidore Lu</dd><dt>Producers</dt><dd>Janghoon, Isid Or</dd><dt>Mix &amp; Master</dt><dd>Isidore Lu</dd><span class="gap"></span><dt>Special Thanks</dt><dd>Junlin Zhu, Tan Sawaddichai</dd></dl></details>
+</section>
+
+<section class="card" id="w02">
+<div class="runhead"><span>Selected Work — 02</span><span>[Recorded Music]</span></div><div class="media n1"><img class="natural" src="love_pop_cover.jpg" alt="Cover art – Sincerely, Mr. Love &amp; Pop" loading="lazy" /></div>
+<div class="proj-head"><span class="num">02</span><h3>ISID OR — <em>SINCERELY, MR. LOVE &amp; POP</em></h3><p class="meta">Japanese mini-album • 2026 • isid music</p></div>
+<dl class="specs"><dt>Artist</dt><dd>isid or</dd><dt>Label</dt><dd>isid music, ISIDORELU.COM&#39;s in-house label</dd><dt>Studio role</dt><dd>Label • Songwriting • Production • Mix &amp; master • Photo shoot • Cover art design • Campaign strategy</dd></dl>
+<p>A Japanese-language electronic pop record, performed, written, co-produced, mixed, and mastered by Isid Or. The music video, merchandise lines, and both New York parties were planned around its release.</p>
+<p class="small"><a href="https://isidorelu.com/love">Listen →</a></p>
+</section>
+
+<section class="card wide" id="w03">
+<div class="runhead"><span>Selected Work — 03</span><span>[Client Work]</span></div><div class="media n1"><div class="ph shape-natural"><span class="label">Image — Kodansha House LA</span><video autoplay muted loop playsinline preload="metadata" poster="KODANSHA_HOUSE_2.jpg" src="KODANSHA_HOUSE_2.jpg"></video></div></div>
+<div class="proj-head"><span class="num">03</span><h3>KODANSHA HOUSE — LOS ANGELES &amp; NEW YORK</h3><p class="meta">Client work • 2026 • Audio supervision &amp; composition</p></div>
+<dl class="specs"><dt>Client</dt><dd>Kodansha</dd><dt>Venues</dt><dd>Kodansha House LA • Kodansha House NYC</dd><dt>Studio role</dt><dd>Audio supervisor · Composer · Immersive audio</dd></dl>
+<p>Kodansha, one of Japan’s largest publishers, stages <a href="https://kodanshahouse.com/">Kodansha House</a> as a series of pop-up fan experiences. For this year&#39;s LA and NYC editions, ISIDORELU.COM served as audio supervisor and composer, writing original looping scores and rendering the immersive audio of the 10-day pop-up event. Each of the five [5] activations was built around a single Kodansha property: <em>Attack on Titan</em>, <em>Blue Lock</em>, <em>AKIRA</em>, <em>Ghost in the Shell</em>, and <em>Witch Hat Atelier</em>.</p>
+<p class="small">Event archive: <a href="https://drive.google.com/drive/folders/13ZxTJB_tLv7K5XqrW23Xaa4eHAAFqA1f?usp=sharing">Kodansha House NYC →</a></p>
+</section>
+
+<section class="card" id="w04">
+<div class="runhead"><span>Selected Work — 04</span><span>[Event]</span></div><div class="media n2"><img class="natural" src="LOVE_POP_PARTY_POSTER.jpg" alt="Poster for the Sincerely, Mr. Love &amp; Pop End-Of-Summer Party at Beverly’s" loading="lazy" /><img class="natural" src="LOVE_POP_PARTY_STILL.jpg" alt="Image of Sincerely, Mr. Love &amp; Pop End-Of-Summer Party at Beverly’s" loading="lazy" /></div>
+<div class="proj-head"><span class="num">04</span><h3>ISIDCORE: <em>SINCERELY, MR. LOVE &amp; POP</em> PRE-RELEASE – END-OF-SUMMER PARTY</h3><p class="meta">Event · July 29, 2026 · Beverly’s NYC</p></div>
+<dl class="specs"><dt>Co-host</dt><dd>Blizzy McGuire</dd><dt>Presented with</dt><dd>Life After Trance</dd><dt>DJs</dt><dd>Océane • Robyn Dabank • Cute Boys • Gagbert • Aster • Mini Lis ☆</dd><dt>Studio role</dt><dd>Concept • Booking • Promotion • Host</dd></dl>
+<p>Hosted with internet personality <a href="https://www.instagram.com/imblizzymcguire/?hl=en">Blizzy McGuire</a> at the LES art gallery and bar <a href="https://www.instagram.com/beverlysnyc/">Beverly&#39;s</a>, the event served as a pre-release party for the mini-album. Isid Or had met more than three hundred [300] creatives in New York between March and July and sought to bring them into one [1] room. More than two hundred [200] guests came through over the course of the nine [9] hour event from 5 P.M to 2 A.M.</p>
+<p class="small">Event archive: <a href="https://www.instagram.com/p/Dbd-xSQidja/?img_index=1">ISIDCORE: End-Of-Summer Party →</a></p>
+</section>
+
+<section class="card" id="w05">
+<div class="runhead"><span>Selected Work — 05</span><span>[Event]</span></div><div class="media n2"><img class="natural" src="J-POP_POSTER.jpg" alt="Flyer for J-Pop Night at Kodansha House" loading="lazy" /><img class="natural" src="J-POP_1.jpg" alt="Image of J-Pop Night at Kodansha House" loading="lazy" /></div>
+<div class="proj-head"><span class="num">05</span><h3>ISIDCORE: J-POP NIGHT @ KODANSHA HOUSE</h3><p class="meta">Event • October 15, 2026 • Kodansha House, New York</p></div>
+<dl class="specs"><dt>Venue partner</dt><dd>Kodansha House NYC</dd><dt>DJs</dt><dd>Aster • Bubucore • Cute Boys • Gagbert</dd><dt>Studio role</dt><dd>Programming • Booking • Promotion • Host</dd></dl>
+<p>Following the audio commission, ISIDORELU.COM was invited back to program an event at the Kodansha House NYC pop-up. Within the warehouse in Hudson Yards, an evening of J-pop and anime openings across eras was produced by the studio, with music from Hikaru Utada and Ayumi Hamasaki to Perfume, m-flo, and Crystal Kay. The night doubled as promotion for <em>Sincerely, Mr. Love &amp; Pop</em>.</p>
+<p class="small">Event archive: <a href="https://www.instagram.com/p/DeqTD0TgOHO/?img_index=1">ISIDCORE: J-Pop Night →</a></p>
+</section>
+
+<section class="card" id="w06">
+<div class="runhead"><span>Selected Work — 06</span><span>[Merchandise]</span></div><div class="tiles"><a href="https://store.isidorelu.com/products/early-investor-in-isid-or-t-shirt-black"><div class="ph"><span class="label">Photo</span><img src="MERCH_1.jpg" alt="" loading="lazy" onerror="this.remove()" /></div>“Early Investor in isid or” T-shirt</a><a href="https://store.isidorelu.com/products/early-investor-in-isid-or-t-shirt-alternative-design-black"><div class="ph"><span class="label">Photo</span><img src="MERCH_2.jpg" alt="" loading="lazy" onerror="this.remove()" /></div>“Early Investor” T-shirt, alt. design</a><a href="https://store.isidorelu.com/products/nugu-numbers-t-shirt-black"><div class="ph"><span class="label">Photo</span><img src="MERCH_3.jpg" alt="" loading="lazy" onerror="this.remove()" /></div>NUGU NUMBERS T-shirt</a><a href="https://store.isidorelu.com/products/who-are-you-t-shirt-black"><div class="ph"><span class="label">Photo</span><img src="MERCH_4.jpg" alt="" loading="lazy" onerror="this.remove()" /></div>NUGU NUMBERS: “Who are you?” T-shirt</a><a href="https://store.isidorelu.com/products/isidcore-j-pop-night-kodansha-house-t-shirt"><div class="ph"><span class="label">Photo</span><img src="MERCH_5.jpg" alt="" loading="lazy" onerror="this.remove()" /></div>J-Pop Night T-shirt</a></div>
+<div class="proj-head"><span class="num">06</span><h3>ISID OR — ARTIST MERCHANDISE</h3><p class="meta">Apparel · 2026 · store.isidorelu.com</p></div>
+<dl class="specs"><dt>Lines</dt><dd>“Early Investor in isid or” • NUGU NUMBERS • J-Pop Night @ Kodansha House</dd><dt>Photography</dt><dd>Claire Su</dd><dt>Studio role</dt><dd>Design · Product development · Production · Online store</dd></dl>
+<p>Three [3] merchandise lines designed and produced by ISIDORELU.COM for Isid Or and J-Pop Night @ Kodansha House NYC, sold through its online store.</p>
+<p class="small"><a href="https://store.isidorelu.com/">Shop →</a></p>
+</section>
+
+<section class="card" id="services">
+<h2>Services</h2>
+<p class="small">The studio works with artists, labels, brands, and venues, from a single [1] deliverable to a full [∞] campaign. Projects are led by Isid Or and staffed per production with a network of New York collaborators.</p>
+<div class="space" style="height: 1.4em"></div>
+<div class="services"><div><h3>Creative Direction &amp; Production</h3><p>Music videos, campaigns, photo shoots: concept, budget, casting, crew, and delivery.</p></div><div><h3>Music &amp; Audio</h3><p>Composition, production, mixing, mastering, and immersive audio for installations and live experiences.</p></div><div><h3>Post-Production</h3><p>Editing, color grading, and sound mixing for music video and short-form film.</p></div><div><h3>Events</h3><p>Party and activation concepts, programming, DJ booking, partnerships, and hosting.</p></div><div><h3>Merchandise</h3><p>Apparel design, product development, and storefront for artists and events.</p></div><div><h3>Editorial</h3><p>Cultural writing, curation, and copy for artists and brands.</p></div></div>
+</section>
+
+<section class="card" id="founder">
+<div class="media n1"><div class="ph shape-portrait"><span class="label">Portrait of Isid Or</span><img src="FOUNDER_PHOTO.jpg" alt="" loading="lazy" onerror="this.remove()" /></div></div>
+<h2>FOUNDER</h2>
+<p><strong>Isidore Lu</strong>, known as <strong>Isid Or</strong>, is a [musician, designer, and writer] based in New York. He writes, produces, records, and engineers electronic pop, and _directs_ and _edits_ the visuals that accompany it. He founded the studio to house this work, and work for clients, under a single name.</p>
+<p class="small">He studies at Carnegie Mellon University. <a href="https://isidorelu.com/about">isidorelu.com →</a></p>
+</section>
+
+<section class="card" id="blog">
+<h2>BLOG: ISIDORELU.COM</h2>
+<p>The blog is where the studio began_, and it continues alongside the production work. Dispatches and short posts on [pop culture, fashion, and the arts] on Instagram at <a href="https://instagram.com/isidcore">@isidcore</a>.</p>
+<p>Long-form essays and newsletter at <a href="https://blog.isidorelu.com">BLOG.ISIDORELU.COM</a>.</p>
+</section>
+
+<section class="card" id="contact">
+<div class="runhead"><span>Contact</span></div><p>[For commissions, collaborations, and press:]</p>
+<p class="large">Email <a href="mailto:isidbrand@gmail.com">isidbrand@gmail.com</a></p>
+<p class="small">IG <a href="https://instagram.com/isidcore">@isidcore</a> • Substack <a href="https://blog.isidorelu.com">blog.isidorelu.com</a> • Store <a href="https://store.isidorelu.com">store.isidorelu.com</a> • Me <a href="https://isidorelu.com">isidorelu.com</a></p>
+</section>
+
+<footer class="card">© 2026 ISIDORELU.COM · New York</footer>
+</main>
+</div>
+<!-- STUDIO:END -->
+      </div>
+
+      <script>
+(function (global) {
+   "use strict";
+
+   /* ---------- text helpers ---------- */
+   function esc(s) {
+      return String(s == null ? "" : s)
+         .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
+         .replace(/"/g, "&quot;").replace(/'/g, "&#39;");
+   }
+   function clean(s) { return String(s == null ? "" : s).replace(/\r\n?/g, "\n").trim(); }
+
+   // Allows web links, mailto:, tel:, #anchors and relative paths. Anything else (e.g. javascript:) is dropped.
+   function safeUrl(u) {
+      u = clean(u);
+      if (!u) return "";
+      if (/^(https?:|mailto:|tel:)/i.test(u)) return u;
+      if (/^[a-z][a-z0-9+.\-]*:/i.test(u)) return "";
+      return u;
+   }
+   function cssUrl(u) {
+      u = safeUrl(u);
+      return u ? u.replace(/["'()\\\s]/g, function (c) { return "%" + c.charCodeAt(0).toString(16).toUpperCase(); }) : "";
+   }
+
+   var LINK_RE = /\[([^\]]+)\]\(((?:[^()\s]|\([^()\s]*\))+)\)/g;
+
+   // [text](link)  **bold**  __underline__  *italic*  line break = <br>
+   function inline(md) {
+      var links = [];
+      var s = esc(clean(md)).replace(LINK_RE, function (_, label, url) {
+         var href = safeUrl(url.replace(/&amp;/g, "&"));
+         links.push(href ? '<a href="' + esc(href) + '">' + fmt(label) + "</a>" : fmt(label));
+         return "\u0000" + (links.length - 1) + "\u0000";
+      });
+      s = fmt(s);
+      return s.replace(/\u0000(\d+)\u0000/g, function (_, i) { return links[+i]; });
+   }
+   function fmt(s) {
+      return s
+         .replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>")
+         .replace(/__(.+?)__/g, "<u>$1</u>")
+         .replace(/\*(.+?)\*/g, "<em>$1</em>")
+         .replace(/ {2,}/g, function (m) { return " " + new Array(m.length).join("&nbsp;"); })
+         .replace(/\n/g, "<br />");
+   }
+   function plain(md) {
+      return clean(md).replace(LINK_RE, "$1").replace(/\*\*|__|\*/g, "").replace(/\s+/g, " ");
+   }
+
+   // Paragraphs (blank line) and "- " list items.
+   function paragraphs(md, cls) {
+      var c = cls ? ' class="' + cls + '"' : "";
+      return clean(md).split(/\n\s*\n/).map(function (para) {
+         var out = "", lines = [], items = [];
+         function flush() {
+            if (lines.length) out += "<p" + c + ">" + inline(lines.join("\n")) + "</p>";
+            if (items.length) out += '<ul class="list' + (cls ? " " + cls : "") + '">' + items.map(function (i) { return "<li>" + inline(i) + "</li>"; }).join("") + "</ul>";
+            lines = []; items = [];
+         }
+         para.split("\n").forEach(function (line) {
+            var m = /^\s*[-•]\s+(.*)$/.exec(line);
+            if (m) { if (lines.length) flush(); items.push(m[1]); }
+            else { if (items.length) flush(); lines.push(line); }
+         });
+         flush();
+         return out;
+      }).join("\n");
+   }
+
+   function isHidden(v) { return /^(true|x|yes|y|hide|hidden|1|✓|✔|☑)$/i.test(clean(v)); }
+   function key(s) { return clean(s).toLowerCase().replace(/\s+/g, " "); }
+   function slug(s) { return clean(s).toLowerCase().replace(/[^a-z0-9_-]+/g, "-").replace(/^-+|-+$/g, ""); }
+   function wrapLink(html, link) { var h = safeUrl(link); return h ? '<a href="' + esc(h) + '">' + html + "</a>" : html; }
+
+   /* ---------- CSV ---------- */
+   function parseCSV(text) {
+      var rows = [], row = [], f = "", q = false, i, ch;
+      text = String(text).replace(/^﻿/, "");
+      for (i = 0; i < text.length; i++) {
+         ch = text[i];
+         if (q) {
+            if (ch === '"') { if (text[i + 1] === '"') { f += '"'; i++; } else q = false; }
+            else f += ch;
+         } else if (ch === '"') q = true;
+         else if (ch === ",") { row.push(f); f = ""; }
+         else if (ch === "\n" || ch === "\r") {
+            if (ch === "\r" && text[i + 1] === "\n") i++;
+            row.push(f); rows.push(row); row = []; f = "";
+         } else f += ch;
+      }
+      if (f !== "" || row.length) { row.push(f); rows.push(row); }
+      return rows;
+   }
+   // Finds the header row (the first row containing all the required names), then reads rows below it by column name.
+   function table(rows, required) {
+      for (var h = 0; h < rows.length; h++) {
+         var names = rows[h].map(function (c) { return clean(c).toUpperCase(); });
+         if (required.every(function (r) { return names.indexOf(r) > -1; })) {
+            return rows.slice(h + 1).map(function (r) {
+               var o = {};
+               names.forEach(function (n, j) { if (n) o[n] = r[j] == null ? "" : r[j]; });
+               return o;
+            }).filter(function (o) { return Object.keys(o).some(function (k) { return clean(o[k]); }); });
+         }
+      }
+      return [];
+   }
+
+   /* ---------- blocks ---------- */
+   var GROUP = { figure: "figures", spec: "specs", credit: "credits", table: "table", service: "services",
+                 image: "media", video: "media", tile: "tiles", title: "head", meta: "head" };
+
+   function mediaItem(r) {
+      var kind = key(r.TYPE), shape = slug(r.LABEL) || (kind === "video" ? "wide" : "natural");
+      var label = '<span class="label">' + inline(r.TEXT) + "</span>";
+      var img = safeUrl(r.IMAGE), link = safeUrl(r.LINK), html;
+      if (kind === "image") {
+         if (shape === "natural" && img) {
+            html = '<img class="natural" src="' + esc(img) + '" alt="' + esc(plain(r.TEXT)) + '" loading="lazy" />';
+         } else {
+            html = '<div class="ph shape-' + shape + '">' + label + (img ? '<img src="' + esc(img) + '" alt="" loading="lazy" onerror="this.remove()" />' : "") + "</div>";
+         }
+         return wrapLink(html, link);
+      }
+      return '<div class="ph shape-' + shape + '">' + label +
+         '<video autoplay muted loop playsinline preload="metadata"' + (img ? ' poster="' + esc(img) + '"' : "") + (link ? ' src="' + esc(link) + '"' : "") + "></video></div>";
+   }
+
+   function group(kind, rows, opts) {
+      switch (kind) {
+         case "figures":
+            return '<div class="figures">' + rows.map(function (r) { return "<div><b>" + inline(r.LABEL) + "</b>" + inline(r.TEXT) + "</div>"; }).join("") + "</div>";
+         case "specs":
+            return '<dl class="specs">' + rows.map(function (r) { return "<dt>" + inline(r.LABEL) + "</dt><dd>" + inline(r.TEXT) + "</dd>"; }).join("") + "</dl>";
+         case "credits":
+            return "<details><summary>" + inline(opts.creditsToggle || "Full credits") + '</summary><dl class="credits">' + rows.map(function (r) {
+               return clean(r.LABEL) || clean(r.TEXT) ? "<dt>" + inline(r.LABEL) + "</dt><dd>" + inline(r.TEXT) + "</dd>" : '<span class="gap"></span>';
+            }).join("") + "</dl></details>";
+         case "table":
+            return '<table class="index">' + rows.map(function (r) {
+               var tag = key(r.LABEL) === "head" ? "th" : "td";
+               return "<tr>" + clean(r.TEXT).split(/\s*\|\s*/).map(function (c) { return "<" + tag + ">" + inline(c) + "</" + tag + ">"; }).join("") + "</tr>";
+            }).join("") + "</table>";
+         case "services":
+            return '<div class="services">' + rows.map(function (r) { return "<div><h3>" + wrapLink(inline(r.LABEL), r.LINK) + "</h3><p>" + inline(r.TEXT) + "</p></div>"; }).join("") + "</div>";
+         case "media":
+            return '<div class="media n' + Math.min(rows.length, 3) + '">' + rows.map(mediaItem).join("") + "</div>";
+         case "tiles":
+            return '<div class="tiles">' + rows.map(function (r) {
+               var img = safeUrl(r.IMAGE);
+               var inner = '<div class="ph"><span class="label">' + inline(r.LABEL) + "</span>" + (img ? '<img src="' + esc(img) + '" alt="" loading="lazy" onerror="this.remove()" />' : "") + "</div>" + inline(r.TEXT);
+               return safeUrl(r.LINK) ? '<a href="' + esc(safeUrl(r.LINK)) + '">' + inner + "</a>" : "<div>" + inner + "</div>";
+            }).join("") + "</div>";
+         case "head":
+            return '<div class="proj-head">' + rows.map(function (r) {
+               return key(r.TYPE) === "title"
+                  ? (clean(r.LABEL) ? '<span class="num">' + inline(r.LABEL) + "</span>" : "") + "<h3>" + wrapLink(inline(r.TEXT), r.LINK) + "</h3>"
+                  : '<p class="meta">' + inline(r.TEXT) + "</p>";
+            }).join("") + "</div>";
+      }
+      return "";
+   }
+
+   function single(r) {
+      var t = key(r.TYPE);
+      if (t === "heading") return "<h2>" + wrapLink(inline(r.TEXT), r.LINK) + "</h2>";
+      if (t === "tag") return '<p class="tag">' + wrapLink(inline(r.TEXT), r.LINK) + "</p>";
+      if (t === "space") return '<div class="space" style="height: ' + Math.min(Math.max(parseFloat(r.LABEL) || 1, 0), 20) * 1.4 + 'em"></div>';
+      if (t === "small" || t === "large") return paragraphs(r.TEXT, t);
+      return paragraphs(r.TEXT, ""); // "text", and anything unrecognised
+   }
+
+   function cardBody(rows, opts) {
+      var out = [], i = 0;
+      while (i < rows.length) {
+         var g = GROUP[key(rows[i].TYPE)];
+         if (!g) { out.push(single(rows[i])); i++; continue; }
+         var run = [];
+         while (i < rows.length && GROUP[key(rows[i].TYPE)] === g) run.push(rows[i++]);
+         out.push(group(g, run, opts));
+      }
+      return out.join("\n");
+   }
+
+   /* ---------- page ---------- */
+   // A card's small header line. No header if the row is missing, HIDE HEADER is marked, or both halves are blank.
+   function runhead(c) {
+      if (!c || isHidden(c["HIDE HEADER"])) return "";
+      var L = clean(c["HEADER LEFT"]), R = clean(c["HEADER RIGHT"]);
+      return L || R ? '<div class="runhead">' + (L ? "<span>" + inline(L) + "</span>" : "") + (R ? "<span>" + inline(R) + "</span>" : "") + "</div>" : "";
+   }
+
+   function render(data) {
+      var S = {};
+      (data.site || []).forEach(function (r) { S[key(r.SETTING)] = r.VALUE == null ? "" : String(r.VALUE); });
+      var opts = { creditsToggle: S["credits toggle"] };
+
+      // The background video itself is fixed in the HTML (not in the sheet); only its caption comes from the sheet.
+      var caption = clean(S["now showing"]) ? '<p class="reel-caption">' + inline(S["now showing"]) + "</p>" : "";
+
+      var speed = parseInt(S["marquee speed"], 10);
+      var marquee = clean(S.marquee) ? '<marquee scrollamount="' + (speed > 0 ? speed : 5) + '">' + inline(S.marquee) + "</marquee>" : "";
+
+      var nav = (data.nav || []).filter(function (r) { return !isHidden(r.HIDE) && clean(r.LABEL); })
+         .map(function (r) { return wrapLink(inline(r.LABEL), r.LINK); }).join("\n");
+      var name = clean(S["studio name"]) ? "<h1>" + wrapLink(inline(S["studio name"]), S["name link"]) + "</h1>" : "";
+      var subs = clean(S.subheading) ? '<p class="subs">' + inline(S.subheading) + "</p>" : "";
+      // The cards-tab row with ID "opening" controls the first card's header (and can hide the card). It always comes first.
+      var openRow = (data.cards || []).filter(function (r) { return slug(r.ID) === "opening"; })[0];
+      var masthead = (name || subs || nav) && !(openRow && isHidden(openRow.HIDE))
+         ? '<div class="opening"><header class="card masthead">' + runhead(openRow) + name + subs + (nav ? "<nav>" + nav + "</nav>" : "") + "</header></div>" : "";
+
+      var blocks = (data.blocks || []).filter(function (r) { return !isHidden(r.HIDE) && clean(r.TYPE); });
+      var cards = (data.cards || []).filter(function (r) { return !isHidden(r.HIDE) && slug(r.ID) !== "opening"; }).map(function (c, n) {
+         var id = slug(c.ID) || "card-" + (n + 1);
+         var rows = blocks.filter(function (r) { return slug(r.CARD) === slug(c.ID) && slug(c.ID); });
+         var head = runhead(c);
+         var wide = key(c.WIDTH) === "wide" ? " wide" : "";
+         return '<section class="card' + wide + '" id="' + id + '">\n' + head + cardBody(rows, opts) + "\n</section>";
+      }).join("\n\n");
+
+      var footer = clean(S.footer) ? '<footer class="card">' + inline(S.footer) + "</footer>" : "";
+
+      return {
+         title: plain(S["page title"]) || plain(S["studio name"]),
+         description: plain(S.description),
+         caption: caption,
+         marquee: marquee,
+         main: "<main>\n" + masthead + "\n\n" + cards + "\n\n" + footer + "\n</main>"
+      };
+   }
+
+   function sig(s) { var h = 5381; for (var i = 0; i < s.length; i++) h = ((h << 5) + h + s.charCodeAt(i)) | 0; return (h >>> 0).toString(36); }
+   var PARTS = ["caption", "marquee", "main"];
+   // The HTML that goes between the STUDIO markers (also what ?export prints).
+   function staticBlock(p) {
+      return PARTS.map(function (k) { return '<div class="part" data-part="' + k + '" data-sig="' + sig(p[k]) + '">\n' + p[k] + "\n</div>"; }).join("\n\n");
+   }
+   function staticHead(p) {
+      return "<title>" + esc(p.title) + '</title>\n      <meta name="description" content="' + esc(p.description) + '" />';
+   }
+
+   var api = { render: render, staticBlock: staticBlock, staticHead: staticHead, parseCSV: parseCSV, table: table, sig: sig, inline: inline };
+   if (typeof module !== "undefined" && module.exports) { module.exports = api; return; }
+
+   /* ---------- browser: load the sheet and update the page ---------- */
+   var root = document.getElementById("studio-page");
+   if (!root) return;
+   var TABS = { site: ["SETTING", "VALUE"], nav: ["LABEL", "LINK"], cards: ["ID"], blocks: ["CARD", "TYPE"] };
+   var names = Object.keys(TABS);
+   var urls = names.map(function (n) { return clean(root.getAttribute("data-" + n)); });
+   var wantExport = /[?&]export\b/.test(location.search);
+
+   function showExport(p) {
+      var box = document.createElement("div");
+      box.style.cssText = "position:fixed;inset:5vh 5vw;z-index:99;background:#fff;border:1px solid #000;padding:12px;display:flex;flex-direction:column;gap:6px;font:14px 'Times New Roman',serif";
+      box.innerHTML = "<b>Search-engine copy</b><span>1) Paste over everything between &lt;!-- STUDIO-HEAD:START --&gt; and &lt;!-- STUDIO-HEAD:END --&gt;:</span>" +
+         '<textarea style="flex:0 0 4.5em;font:12px monospace"></textarea>' +
+         "<span>2) Paste over everything between &lt;!-- STUDIO:START --&gt; and &lt;!-- STUDIO:END --&gt;:</span>" +
+         '<textarea style="flex:1;font:12px monospace"></textarea>';
+      var t = box.querySelectorAll("textarea");
+      t[0].value = staticHead(p); t[1].value = staticBlock(p);
+      document.body.appendChild(box);
+   }
+
+   if (!urls.every(function (u) { return /^https?:/i.test(u); })) {
+      if (wantExport) console.warn("Studio sheet: paste all four published CSV links into the data- attributes first.");
+      return;
+   }
+
+   Promise.all(urls.map(function (u) {
+      return fetch(u, { cache: "no-store" }).then(function (r) { if (!r.ok) throw new Error(r.status + " " + u); return r.text(); });
+   })).then(function (texts) {
+      var data = {};
+      texts.forEach(function (t, i) { data[names[i]] = table(parseCSV(t), TABS[names[i]]); });
+      var p = render(data);
+      if (p.title) document.title = p.title;
+      var md = document.querySelector('meta[name="description"]');
+      if (md && p.description) md.setAttribute("content", p.description);
+
+      // Keep the opening timing: cards swapped in late appear at once instead of re-running the 1.6s wait.
+      var elapsed = performance.now();
+      root.style.setProperty("--fade-delay", Math.max(0, 1600 - elapsed) + "ms");
+      if (elapsed > 1600) root.style.setProperty("--fade-dur", "0s");
+
+      PARTS.forEach(function (k) {
+         var el = root.querySelector('[data-part="' + k + '"]');
+         var s = sig(p[k]);
+         if (el && el.getAttribute("data-sig") === s) return; // unchanged: leave it (no video restart, no flicker)
+         var div = document.createElement("div");
+         div.className = "part"; div.setAttribute("data-part", k); div.setAttribute("data-sig", s);
+         div.innerHTML = p[k];
+         if (el) el.replaceWith(div); else root.appendChild(div);
+      });
+      if (wantExport) showExport(p);
+   }).catch(function (e) {
+      console.warn("Studio sheet could not be loaded; showing the copy saved in the page.", e);
+   });
+})(this);
+
+      </script>
+   </body>
+</html>
